@@ -21,12 +21,13 @@ def plot_metricas(diccionario_experimentos, ambiente, ruta):
 
     #creamos una figura
     plt.figure(figsize=(10,6))
+    plt.gcf().supylabel("valor del indice")
     
     #grafico para ISE
     plt.subplot(1,4,1) #ubicacion del en subplot
     plt.bar(["PPO", "Mask"], [ppo["ISE"], mask["ISE"]]) #grafica dos barras, donde los primeros con los nombres de cada barra y sus respectivos valores para cada una extraida de sus respectivos diccionarios
     plt.title("ISE") #titulo es la metrica sobre la que se compara
-    plt.ylabel("Valor del indice")
+    
 
     #grafico para IAE
     plt.subplot(1,4,2) #ubicacion del en subplot
@@ -44,11 +45,11 @@ def plot_metricas(diccionario_experimentos, ambiente, ruta):
     plt.title("ITAE") #titulo es la metrica sobre la que se compara
 
     plt.tight_layout() #mejora de visualizacion
-    plt.show()
+    
     #a) 3 Automatización: Use la librería os para asegurar que la carpeta resultados_graficos/ exista antes de guardar la figura con un nombre descriptivo.
     os.makedirs("resultados_graficos", exist_ok=True) #evalua si la carpeta existe o no
     plt.savefig("resultados_graficos/metricas_grafico_PPO_vs_PPO-Mask.png") #guardamos la figura (graficos) en la carpeta "resultados_graficos" bajo el nombre de "metricas_grafico_PPO_vs_PPO-Mask" en formato .png
-
+    plt.show()
     
 #b) plot_lidar(angulos, distancias, distancias_norm) Visualice la percepción del robot para depurar posibles colisiones. Esta función, se utilizaen el código main.py, tiene como argumento de entrada los valores que entrega la función simular_lidar().
 
