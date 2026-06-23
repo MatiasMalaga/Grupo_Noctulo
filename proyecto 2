@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <stdbool.h>
+
+// Parte 1: Estructura del eslabón
+typedef struct {
+    int id;
+    float x;
+    float y;
+} Eslabon;
+
+// Parte 2: Función para generar posición inicial aleatoria
+void generarPosicionInicial(float *x, float *y) {
+    *x = (float)(rand() % 361); // valores entre 0 y 360
+    *y = (float)(rand() % 361);
+}
+
+// Parte 3: Función para simular el avance hacia auto-home
+bool autoHome(Eslabon *e) {
+    printf("Eslabon %d: posicion inicial (%.0f, %.0f)\n", e->id, e->x, e->y);
+
+    while (e->x != 0.0f || e->y != 0.0f) {
+        if (e->x > 0.0f) {
+            e->x -= 1.0f;
+        }
+
+        if (e->y > 0.0f) {
+            e->y -= 1.0f;
+        }
+    }
+
+    printf("Eslabon %d: posicion final (%.0f, %.0f)\n", e->id, e->x, e->y);
+
+    if (e->x == 0.0f && e->y == 0.0f) {
+        return true;
+    }
+
+    return false;
+}
+
+// Parte 4: Función principal
+int main() {
+    srand(time(NULL));
+
+    Eslabon id1, id2, id3, id4;
+
+    id1.id = 1;
+    id2.id = 2;
+    id3.id = 3;
+    id4.id = 4;
+
+    printf("=== Simulacion de Auto-Home del Brazo Robotico ===\n\n");
+
+    generarPosicionInicial(&id1.x, &id1.y);
+    generarPosicionInicial(&id2.x, &id2.y);
+    generarPosicionInicial(&id3.x, &id3.y);
+    generarPosicionInicial(&id4.x, &id4.y);
+
+    bool terminado1 = autoHome(&id1);
+    bool terminado2 = autoHome(&id2);
+    bool terminado3 = autoHome(&id3);
+    bool terminado4 = autoHome(&id4);
+
+    if (terminado1) printf("Eslabon 1 terminado\n");
+    if (terminado2) printf("Eslabon 2 terminado\n");
+    if (terminado3) printf("Eslabon 3 terminado\n");
+    if (terminado4) printf("Eslabon 4 terminado\n");
+
+    if (terminado1 && terminado2 && terminado3 && terminado4) {
+        printf("\nTodos los eslabones realizaron auto-home correctamente.\n");
+    }
+
+    return 0;
+}
